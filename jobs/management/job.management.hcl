@@ -25,18 +25,10 @@ job "management" {
         destination = "local/artifacts"
         options {
           sshkey = "${base64encode(file("/home/eye-track/.ssh/id_ed25519"))}"
+          ref = "master"
+          depth = 1
         }
       }
-
-      //artifact {
-      //   source      = "git::https://github.com/eye-track/nomad-cluster.git//jobs/management/artifacts/cfg.consul.hcl"
-      //   destination = "local/cfg.consul.hcl"
-      //   mode        = "file"
-      //   options {
-      //    ref = "master"
-      //    depth = 1
-      //  }
-      //}
 
       resources {
         cpu    = 100
