@@ -1,5 +1,5 @@
 datacenter = "dc1"
-data_dir  = "/home/eye-track/nomad/data/consul"
+//data_dir  = "/home/eye-track/nomad/data/consul"
 node_name  = "consul-client-1"
 
 # Network configuration
