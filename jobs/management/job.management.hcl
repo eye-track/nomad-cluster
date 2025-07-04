@@ -3,6 +3,12 @@ job "management" {
   type        = "system"
 
   group "init-node" {
+    volume "secrets-vol" {
+      type = "host"
+      source = "secrets-vol"
+      read_only = false
+    }
+
     task "consul-agent" {
       driver = "exec"
 
@@ -21,13 +27,23 @@ job "management" {
       }
 
       artifact {
-        source      = "git::https://github.com/eye-track/nomad-cluster.git//jobs/management/artifacts"
+        source      = "git::git@github.com:eye-track/nomad-cluster.git//jobs/management/artifacts"
         destination = "local/artifacts"
         options {
           sshkey = "${base64encode(file("/home/eye-track/.ssh/id_ed25519"))}"
           ref = "master"
           depth = 1
         }
+      }
+
+      artifact {
+        source      = "file::/home/eye-track/consul_agent/certs"
+        destination = "local/certs"
+      }
+      
+      volume_mount {
+        volume      = "secrets-vol"
+        destination = "secrets"
       }
 
       resources {
