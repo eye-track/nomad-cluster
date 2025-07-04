@@ -1,3 +1,5 @@
-#!/bin/sh
-unzip local/artifacts/consul.zip consul -d local/artifacts
-exec local/artifacts/consul agent -dev
+echo "Unzip Consul agent..."
+unzip local/consul.zip consul -d local/
+
+echo "Starting Consul agent..."
+exec local/consul agent -config=local/cfg.consul.hcl
