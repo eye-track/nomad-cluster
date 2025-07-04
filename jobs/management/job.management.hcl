@@ -7,35 +7,36 @@ job "management" {
       driver = "exec"
 
       config {
-        command = "local/start-consul-agent.sh"
+        command = "local/artifacts/start-consul-agent.sh"
       }
 
       artifact {
         source      = "https://releases.hashicorp.com/consul/1.21.2/consul_1.21.2_linux_arm64.zip"
-        destination = "local/consul"
+        destination = "local/consul.zip"
+        mode = "file"
         options {
           archive = true
-          checksum = "fb53ea04f7deb97919417edda938b7f70f967840f2060158a157e9b130ce725e"
+          checksum = "sha256:fb53ea04f7deb97919417edda938b7f70f967840f2060158a157e9b130ce725e"
         }
       }
 
       artifact {
-        source      = "git::https://github.com/eye-track/nomad-cluster.git//jobs/management/artifacts/start-consul-agent.sh"
-        destination = "local/start-consul-agent.sh"
+        source      = "git::https://github.com/eye-track/nomad-cluster.git//jobs/management/artifacts"
+        destination = "local/artifacts"
         options {
-          ref = "master"
-          depth = 1
+          sshkey = "${base64encode(file("/home/eye-track/.ssh/id_ed25519"))}"
         }
       }
 
-      artifact {
-         source      = "git::https://github.com/eye-track/nomad-cluster.git//jobs/management/artifacts/cfg.consul.hcl"
-         destination = "local/cfg.consul.hcl"
-         options {
-          ref = "master"
-          depth = 1
-        }
-      }
+      //artifact {
+      //   source      = "git::https://github.com/eye-track/nomad-cluster.git//jobs/management/artifacts/cfg.consul.hcl"
+      //   destination = "local/cfg.consul.hcl"
+      //   mode        = "file"
+      //   options {
+      //    ref = "master"
+      //    depth = 1
+      //  }
+      //}
 
       resources {
         cpu    = 100
