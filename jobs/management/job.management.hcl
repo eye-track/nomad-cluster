@@ -36,14 +36,9 @@ job "management" {
         }
       }
 
-      artifact {
-        source      = "file::/home/eye-track/consul_agent/certs"
-        destination = "local/certs"
-      }
-      
       volume_mount {
         volume      = "secrets-vol"
-        destination = "secrets"
+        destination = "/secrets"
       }
 
       resources {
