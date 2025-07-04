@@ -1,5 +1,5 @@
 datacenter = "dc1"
-data_dir  = "local/consul-data"
+data_dir  = "/home/eye-track/nomad/data/consul"
 node_name  = "consul-client-1"
 
 # Network configuration
@@ -18,9 +18,9 @@ encrypt = "FNEVe7g1bjMOvWnNjo78qw7uP76GfmkZ11+fheIpEYg="
 
 tls {
   defaults {
-    ca_file   = "/secrets/consul/consul-agent-ca.pem"
-    cert_file = "/secrets/consul/dc1-client-consul-0.pem"
-    key_file  = "/secrets/consul/dc1-client-consul-0-key.pem"
+    ca_file   = "/home/eye-track/consul_agent/certs/consul-agent-ca.pem"
+    cert_file = "/home/eye-track/consul_agent/certs/dc1-client-consul-0.pem"
+    key_file  = "/home/eye-track/consul_agent/certs/dc1-client-consul-0-key.pem"
     verify_incoming = true
     verify_outgoing = true
   }
