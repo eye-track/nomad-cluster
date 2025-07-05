@@ -70,7 +70,7 @@ job "management" {
       driver = "exec"
 
       config {
-        command = "agent"
+        command = "consul agent"
         args = ["-config-file=/local/artifacts/cfg.consul.hcl"]
       }
 
