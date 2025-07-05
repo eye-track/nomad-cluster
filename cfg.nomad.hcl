@@ -23,7 +23,7 @@ client {
   enabled = true
 
   network_interface = "tun0"
-  #cni_path = "/opt/cni/bin"   # path where CNI plugins were installed
+  cni_path = "/opt/cni/bin"   # path where CNI plugins were installed
 
   options = {
     "driver.raw_exec.enable" = "1"
