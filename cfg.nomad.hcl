@@ -25,6 +25,10 @@ client {
   network_interface = "tun0"
   #cni_path = "/opt/cni/bin"   # path where CNI plugins were installed
 
+  options = {
+    "driver.raw_exec.enable" = "1"
+  }
+  
   host_volume "source-videos-vol" {
     path      = "/home/eye-track/nomad/chairlift-microservices/data/Skistar_Are"
     read_only = false

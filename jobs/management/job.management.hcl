@@ -54,7 +54,7 @@ job "management" {
 
   group "cni-plugin" {
     task "install-cni-plugin" {
-      driver = "exec"
+      driver = "raw_exec"
 
       config {
         command = "local/artifacts/install-cni-plugin.sh"
