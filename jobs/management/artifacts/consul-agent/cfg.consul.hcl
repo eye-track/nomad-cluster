@@ -36,6 +36,16 @@ acl {
   }
 }
 
+connect {
+  enabled = true
+}
+
 ports {
   dns = 8600
+  grpc = 8502
+}
+
+dns_config {
+  enable_truncate = true
+  only_passing = true
 }
