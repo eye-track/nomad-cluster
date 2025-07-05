@@ -5,7 +5,6 @@ job "management" {
   group "consul-agent" {
     task "start-consul-agent" {
       driver = "exec"
-      user = "eye-track"
 
       config {
         command = "local/artifacts/start-consul-agent.sh"
@@ -22,7 +21,7 @@ job "management" {
       }
 
       artifact {
-        source      = "git::git@github.com:eye-track/nomad-cluster.git//jobs/management/artifacts"
+        source      = "git::git@github.com:eye-track/nomad-cluster.git//jobs/management/artifacts/consul-agent"
         destination = "local/artifacts"
         options {
           sshkey = "${base64encode(file("/home/eye-track/.ssh/id_ed25519"))}"
@@ -56,7 +55,6 @@ job "management" {
   group "cni-plugin" {
     task "install-cni-plugin" {
       driver = "exec"
-      user = "eye-track"
 
       config {
         command = "local/artifacts/install-cni-plugin.sh"
@@ -73,7 +71,7 @@ job "management" {
       }
 
       artifact {
-        source      = "git::git@github.com:eye-track/nomad-cluster.git//jobs/management/artifacts"
+        source      = "git::git@github.com:eye-track/nomad-cluster.git//jobs/management/artifacts/cni-plugin"
         destination = "local/artifacts"
         options {
           sshkey = "${base64encode(file("/home/eye-track/.ssh/id_ed25519"))}"
