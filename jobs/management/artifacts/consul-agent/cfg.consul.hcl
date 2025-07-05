@@ -42,7 +42,6 @@ connect {
 
 ports {
   dns = 8600
-  grpc = 8502
 }
 
 dns_config {
