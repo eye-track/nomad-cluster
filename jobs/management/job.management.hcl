@@ -60,6 +60,14 @@ job "management" {
         command = "local/artifacts/install-cni-plugin.sh"
       }
 
+      # Don't restart the task if it exits successfully
+      restart {
+        attempts = 0
+        interval = "0s"
+        delay    = "0s"
+        mode     = "fail"
+      }
+
       artifact {
         source      = "https://github.com/containernetworking/plugins/releases/download/v1.7.1/cni-plugins-linux-arm64-v1.7.1.tgz"
         destination = "local/cni-plugins.tgz"
