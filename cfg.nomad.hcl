@@ -45,9 +45,9 @@ client {
     read_only = false
   }
 
-  meta {
-    home_dir = "/home/youruser"
-  }
+  //meta {
+  //  home_dir = "/home/youruser"
+  //}
 }
 
 consul {

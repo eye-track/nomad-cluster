@@ -2,13 +2,7 @@ job "management" {
   datacenters = ["dc1"]
   type        = "system"
 
-  group "init-node" {
-    volume "secrets-vol" {
-      type = "host"
-      source = "secrets-vol"
-      read_only = false
-    }
-
+  group "consul-agent" {
     task "start-consul-agent" {
       driver = "exec"
       user = "eye-track"
@@ -37,11 +31,6 @@ job "management" {
         }
       }
 
-      volume_mount {
-        volume      = "secrets-vol"
-        destination = "/secrets"
-      }
-
       resources {
         cpu    = 100
         memory = 128
@@ -62,5 +51,41 @@ job "management" {
     //    args = ["consul"]
     //  }
     //}
+  }
+
+  group "cni-plugin" {
+    task "install-cni-plugin" {
+      driver = "exec"
+      user = "eye-track"
+
+      config {
+        command = "local/artifacts/install-cni-plugin.sh"
+      }
+
+      artifact {
+        source      = "https://github.com/containernetworking/plugins/releases/download/v1.7.1/cni-plugins-linux-arm64-v1.7.1.tgz"
+        destination = "local/cni-plugins.tgz"
+        mode = "file"
+        options {
+          archive = true
+          checksum = "sha256:119fcb508d1ac2149e49a550752f9cd64d023a1d70e189b59c476e4d2bf7c497"
+        }
+      }
+
+      artifact {
+        source      = "git::git@github.com:eye-track/nomad-cluster.git//jobs/management/artifacts"
+        destination = "local/artifacts"
+        options {
+          sshkey = "${base64encode(file("/home/eye-track/.ssh/id_ed25519"))}"
+          ref = "master"
+          depth = 1
+        }
+      }
+
+      resources {
+        cpu    = 100
+        memory = 128
+      }
+    }
   }
 }
