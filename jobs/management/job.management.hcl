@@ -39,7 +39,7 @@ job "management" {
       }
 
       artifact {
-        source      = "curl -O https://releases.hashicorp.com/consul-cni/1.7.2/consul-cni_1.7.2_linux_arm64.zip"
+        source      = "https://releases.hashicorp.com/consul-cni/1.7.2/consul-cni_1.7.2_linux_arm64.zip"
         destination = "local/consul-cni.zip"
         mode = "file"
         options {

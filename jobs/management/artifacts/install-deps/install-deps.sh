@@ -1,9 +1,12 @@
 #!/bin/bash
 
+# TODO: Install only if missing
+
 CONSUL_DIR="/usr/local/bin/"
 echo "[START] Install Consul to $CONSUL_DIR ..."
 unzip -o local/consul.zip consul -d $CONSUL_DIR
-cmd_version="nomad -v"
+echo "[END] Install Consul to $CONSUL_DIR !"
+cmd_version="consul -v"
 eval $cmd_version
 
 CNI_PLUGING_DIR="/opt/cni/bin"
