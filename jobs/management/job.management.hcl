@@ -9,8 +9,9 @@ job "management" {
       read_only = false
     }
 
-    task "consul-agent" {
+    task "start-consul-agent" {
       driver = "exec"
+      user = "eye-track"
 
       config {
         command = "local/artifacts/start-consul-agent.sh"
@@ -46,5 +47,20 @@ job "management" {
         memory = 128
       }
     }
+
+    //task "stop-consul-agent" {
+    //  lifecycle {
+    //    hook = "poststop"
+    //    sidecar = false
+    //  }
+    //
+    //  driver = "exec"
+    //  user = "eye-track"
+    //
+    //  config {
+    //    command = "pkill"
+    //    args = ["consul"]
+    //  }
+    //}
   }
 }
