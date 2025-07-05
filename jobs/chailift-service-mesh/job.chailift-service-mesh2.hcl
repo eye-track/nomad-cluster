@@ -1,48 +1,64 @@
-job "sample-service" {
+job "countdash" {
   datacenters = ["dc1"]
-  
-  group "service" {
+
+  group "api" {
     network {
       mode = "bridge"
-      port "http" {
-        to = 8080
+    }
+
+    service {
+      name = "count-api"
+      port = "9001"
+
+      connect {
+        sidecar_service {}
       }
     }
-    
+
+    task "web" {
+      driver = "docker"
+
+      config {
+        image = "hashicorpdev/counter-api:v3"
+      }
+    }
+  }
+
+  group "dashboard" {
+    network {
+      mode = "bridge"
+
+      port "http" {
+        static = 9002
+        to     = 9002
+      }
+    }
+
     service {
-      name = "sample"
+      name = "count-dashboard"
       port = "http"
-      
+
       connect {
         sidecar_service {
           proxy {
             upstreams {
-              destination_name = "database"
-              local_bind_port  = 5432
+              destination_name = "count-api"
+              local_bind_port  = 8080
             }
           }
         }
       }
-      
-      check {
-        type     = "http"
-        path     = "/health"
-        interval = "10s"
-        timeout  = "2s"
-      }
     }
-    
-    task "app" {
+
+    task "dashboard" {
       driver = "docker"
-      
-      config {
-        image = "our-sample-service:latest"
-        ports = ["http"]
-      }
-      
+
       env {
-        DB_HOST = "localhost"
-        DB_PORT = "5432"
+        COUNTING_SERVICE_URL = "http://${NOMAD_UPSTREAM_ADDR_count_api}"
+      }
+
+      config {
+        image = "hashicorpdev/counter-dashboard:v3"
       }
     }
   }
